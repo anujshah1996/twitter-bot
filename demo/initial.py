@@ -1,10 +1,10 @@
 import tweepy
 import Tkinter
 
-consumer_key = 'EPCVSq3f0aN5KlS55WkeYuMTt'
-consumer_secret = '8I3vW1Wi7uw5TyB8FyOmBdknQGvt4I13QZ68zakkX4G6w2lRcT'
-access_token = '708502326-SCq5Lic6Fagu3XNSMAj1hIz4pPMAM0pjsm1GoRz9'
-access_token_secret = 'WEOoC1byOPuG86lYNDQG3sKQVTWUHzx7it9Y9StYFRiTA'
+consumer_key = 'consumer_key'
+consumer_secret = 'consumer_secret_key'
+access_token = 'access_token_key'
+access_token_secret = 'access_token_secret'
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
 api = tweepy.API(auth)
