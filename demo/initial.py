@@ -1,9 +1,10 @@
 import tweepy
 import Tkinter
+import time
 
 consumer_key = 'consumer_key'
-consumer_secret = 'consumer_secret_key'
-access_token = 'access_token_key'
+consumer_secret = 'consumer_secret'
+access_token = 'access_token'
 access_token_secret = 'access_token_secret'
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
@@ -37,10 +38,7 @@ def bulkRetweet(searchObj):
 
 
 searchObj = [
-    {"key": "react js", "noOfTweets": 3},
-    {"key": "competitive coding", "noOfTweets": 3},
-    {"key": "logistics and supply chain", "noOfTweets": 2},
-    {"key": "Shipmnts", "noOfTweets": 2}
+    {"key": "Shipmnts", "noOfTweets": 1}
 ]
 
 
@@ -48,4 +46,10 @@ def main():
     bulkRetweet(searchObj)
 
 
-main()
+starttime = time.time()
+timeIntervalInSeconds = 5
+
+while True:
+    print "tick"
+    time.sleep(timeIntervalInSeconds - (time.time() - starttime) %
+               timeIntervalInSeconds)
