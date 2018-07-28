@@ -20,6 +20,7 @@ from tweepy.cursor import Cursor
 # Global, unauthenticated instance of API
 api = API()
 
+
 def debug(enable=True, level=1):
     from six.moves.http_client import HTTPConnection
     HTTPConnection.debuglevel = level

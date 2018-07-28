@@ -107,7 +107,8 @@ class API(object):
             api=self,
             path='/statuses/lookup.json',
             payload_type='status', payload_list=True,
-            allowed_param=['id', 'include_entities', 'trim_user', 'map', 'tweet_mode'],
+            allowed_param=['id', 'include_entities',
+                           'trim_user', 'map', 'tweet_mode'],
             require_auth=True
         )
 
@@ -190,7 +191,8 @@ class API(object):
             path='/statuses/update.json',
             method='POST',
             payload_type='status',
-            allowed_param=['status', 'in_reply_to_status_id', 'in_reply_to_status_id_str', 'auto_populate_reply_metadata', 'lat', 'long', 'source', 'place_id', 'display_coordinates'],
+            allowed_param=['status', 'in_reply_to_status_id', 'in_reply_to_status_id_str',
+                           'auto_populate_reply_metadata', 'lat', 'long', 'source', 'place_id', 'display_coordinates'],
             require_auth=True
         )(post_data=post_data, *args, **kwargs)
 
@@ -199,7 +201,8 @@ class API(object):
             :allowed_param:
         """
         f = kwargs.pop('file', None)
-        headers, post_data = API._pack_image(filename, 4883, form_field='media', f=f)
+        headers, post_data = API._pack_image(
+            filename, 4883, form_field='media', f=f)
         kwargs.update({'headers': headers, 'post_data': post_data})
 
         return bind_api(
@@ -217,7 +220,8 @@ class API(object):
             :allowed_param:'status', 'possibly_sensitive', 'in_reply_to_status_id', 'in_reply_to_status_id_str', 'auto_populate_reply_metadata', 'lat', 'long', 'place_id', 'display_coordinates'
         """
         f = kwargs.pop('file', None)
-        headers, post_data = API._pack_image(filename, 3072, form_field='media[]', f=f)
+        headers, post_data = API._pack_image(
+            filename, 3072, form_field='media[]', f=f)
         kwargs.update({'headers': headers, 'post_data': post_data})
 
         return bind_api(
@@ -320,7 +324,8 @@ class API(object):
             api=self,
             path='/statuses/oembed.json',
             payload_type='json',
-            allowed_param=['id', 'url', 'maxwidth', 'hide_media', 'omit_script', 'align', 'related', 'lang']
+            allowed_param=['id', 'url', 'maxwidth', 'hide_media',
+                           'omit_script', 'align', 'related', 'lang']
         )
 
     def lookup_users(self, user_ids=None, screen_names=None, include_entities=None):
@@ -551,7 +556,8 @@ class API(object):
             api=self,
             path='/friends/list.json',
             payload_type='user', payload_list=True,
-            allowed_param=['id', 'user_id', 'screen_name', 'cursor', 'skip_status', 'include_user_entities']
+            allowed_param=['id', 'user_id', 'screen_name',
+                           'cursor', 'skip_status', 'include_user_entities']
         )
 
     @property
@@ -643,7 +649,8 @@ class API(object):
                 path='/account/verify_credentials.json',
                 payload_type='user',
                 require_auth=True,
-                allowed_param=['include_entities', 'skip_status', 'include_email'],
+                allowed_param=['include_entities',
+                               'skip_status', 'include_email'],
             )(**kargs)
         except TweepError as e:
             if e.response and e.response.status == 401:
@@ -711,7 +718,8 @@ class API(object):
             :allowed_param:'width', 'height', 'offset_left', 'offset_right'
         """
         f = kargs.pop('file', None)
-        headers, post_data = API._pack_image(filename, 700, form_field="banner", f=f)
+        headers, post_data = API._pack_image(
+            filename, 700, form_field="banner", f=f)
         bind_api(
             api=self,
             path='/account/update_profile_banner.json',
@@ -730,7 +738,8 @@ class API(object):
             path='/account/update_profile.json',
             method='POST',
             payload_type='user',
-            allowed_param=['name', 'url', 'location', 'description', 'profile_link_color'],
+            allowed_param=['name', 'url', 'location',
+                           'description', 'profile_link_color'],
             require_auth=True
         )
 
@@ -743,7 +752,8 @@ class API(object):
             api=self,
             path='/favorites/list.json',
             payload_type='status', payload_list=True,
-            allowed_param=['screen_name', 'user_id', 'max_id', 'count', 'since_id', 'max_id']
+            allowed_param=['screen_name', 'user_id',
+                           'max_id', 'count', 'since_id', 'max_id']
         )
 
     @property
@@ -839,8 +849,6 @@ class API(object):
             allowed_param=['id', 'user_id', 'screen_name'],
             require_auth=True
         )
-
-
 
     @property
     def blocks(self):
@@ -968,7 +976,8 @@ class API(object):
             path='/lists/update.json',
             method='POST',
             payload_type='list',
-            allowed_param=['list_id', 'slug', 'name', 'mode', 'description', 'owner_screen_name', 'owner_id'],
+            allowed_param=['list_id', 'slug', 'name', 'mode',
+                           'description', 'owner_screen_name', 'owner_id'],
             require_auth=True
         )
 
@@ -994,7 +1003,8 @@ class API(object):
             api=self,
             path='/lists/memberships.json',
             payload_type='list', payload_list=True,
-            allowed_param=['screen_name', 'user_id', 'filter_to_owned_lists', 'cursor'],
+            allowed_param=['screen_name', 'user_id',
+                           'filter_to_owned_lists', 'cursor'],
             require_auth=True
         )
 
@@ -1339,7 +1349,8 @@ class API(object):
         if f is None:
             try:
                 if os.path.getsize(filename) > (max_size * 1024):
-                    raise TweepError('File is too big, must be less than %skb.' % max_size)
+                    raise TweepError(
+                        'File is too big, must be less than %skb.' % max_size)
             except os.error as e:
                 raise TweepError('Unable to access file: %s' % e.strerror)
 
@@ -1348,7 +1359,8 @@ class API(object):
         else:
             f.seek(0, 2)  # Seek to end of file
             if f.tell() > (max_size * 1024):
-                raise TweepError('File is too big, must be less than %skb.' % max_size)
+                raise TweepError(
+                    'File is too big, must be less than %skb.' % max_size)
             f.seek(0)  # Reset to beginning of file
             fp = f
 

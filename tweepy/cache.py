@@ -25,6 +25,7 @@ except ImportError:
 
 log = logging.getLogger('tweepy.cache')
 
+
 class Cache(object):
     """Cache interface"""
 
@@ -403,7 +404,7 @@ class MongodbCache(Cache):
         self.col.create_index('created', expireAfterSeconds=timeout)
 
     def store(self, key, value):
-        from bson.binary import Binary
+        from bson.binary import Binarys
 
         now = datetime.datetime.utcnow()
         blob = Binary(pickle.dumps(value))

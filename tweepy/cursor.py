@@ -105,7 +105,8 @@ class IdIterator(BaseIterator):
             raise StopIteration
 
         if self.index >= len(self.results) - 1:
-            data = self.method(max_id=self.max_id, parser=RawParser(), *self.args, **self.kargs)
+            data = self.method(max_id=self.max_id,
+                               parser=RawParser(), *self.args, **self.kargs)
 
             if hasattr(self.method, '__self__'):
                 old_parser = self.method.__self__.parser
@@ -117,7 +118,8 @@ class IdIterator(BaseIterator):
             model = ModelParser().parse(self.method(create=True), data)
             if hasattr(self.method, '__self__'):
                 self.method.__self__.parser = old_parser
-                result = self.method.__self__.parser.parse(self.method(create=True), data)
+                result = self.method.__self__.parser.parse(
+                    self.method(create=True), data)
             else:
                 result = model
 

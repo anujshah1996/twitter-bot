@@ -82,7 +82,8 @@ class OAuthHandler(AuthHandler):
                     logging.warning(WARNING_MESSAGE)
             else:
                 url = self._get_oauth_url('authorize')
-            self.request_token = self._get_request_token(access_type=access_type)
+            self.request_token = self._get_request_token(
+                access_type=access_type)
             return self.oauth.authorization_url(url)
         except Exception as e:
             raise TweepError(e)

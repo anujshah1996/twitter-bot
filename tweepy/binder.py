@@ -23,6 +23,7 @@ re_path_template = re.compile('{\w+}')
 
 log = logging.getLogger('tweepy.binder')
 
+
 def bind_api(**config):
 
     class APIMethod(object):
@@ -94,7 +95,8 @@ def bind_api(**config):
                 if arg is None:
                     continue
                 try:
-                    self.session.params[self.allowed_param[idx]] = convert_to_utf8_str(arg)
+                    self.session.params[self.allowed_param[idx]
+                                        ] = convert_to_utf8_str(arg)
                 except IndexError:
                     raise TweepError('Too many parameters supplied!')
 
@@ -102,7 +104,8 @@ def bind_api(**config):
                 if arg is None:
                     continue
                 if k in self.session.params:
-                    raise TweepError('Multiple values for parameter %s supplied!' % k)
+                    raise TweepError(
+                        'Multiple values for parameter %s supplied!' % k)
 
                 self.session.params[k] = convert_to_utf8_str(arg)
 
@@ -119,7 +122,8 @@ def bind_api(**config):
                     try:
                         value = quote(self.session.params[name])
                     except KeyError:
-                        raise TweepError('No parameter value found for path variable: %s' % name)
+                        raise TweepError(
+                            'No parameter value found for path variable: %s' % name)
                     del self.session.params[name]
 
                 self.path = self.path.replace(variable, value)
@@ -134,7 +138,8 @@ def bind_api(**config):
             # Query the cache if one is available
             # and this request uses a GET method.
             if self.use_cache and self.api.cache and self.method == 'GET':
-                cache_result = self.api.cache.get('%s?%s' % (url, urlencode(self.session.params)))
+                cache_result = self.api.cache.get(
+                    '%s?%s' % (url, urlencode(self.session.params)))
                 # if cache result found and not expired, return it
                 if cache_result:
                     # must restore api reference
@@ -157,11 +162,14 @@ def bind_api(**config):
                     if self._reset_time is not None:
                         if self._remaining_calls is not None:
                             if self._remaining_calls < 1:
-                                sleep_time = self._reset_time - int(time.time())
+                                sleep_time = self._reset_time - \
+                                    int(time.time())
                                 if sleep_time > 0:
                                     if self.wait_on_rate_limit_notify:
-                                        log.warning("Rate limit reached. Sleeping for: %d" % sleep_time)
-                                    time.sleep(sleep_time + 5)  # sleep for few extra sec
+                                        log.warning(
+                                            "Rate limit reached. Sleeping for: %d" % sleep_time)
+                                    # sleep for few extra sec
+                                    time.sleep(sleep_time + 5)
 
                 # if self.wait_on_rate_limit and self._reset_time is not None and \
                 #                 self._remaining_calls is not None and self._remaining_calls < 1:
@@ -189,7 +197,8 @@ def bind_api(**config):
                                                 auth=auth,
                                                 proxies=self.api.proxy)
                 except Exception as e:
-                    six.reraise(TweepError, TweepError('Failed to send request: %s' % e), sys.exc_info()[2])
+                    six.reraise(TweepError, TweepError(
+                        'Failed to send request: %s' % e), sys.exc_info()[2])
 
                 rem_calls = resp.headers.get('x-rate-limit-remaining')
 
@@ -238,7 +247,8 @@ def bind_api(**config):
 
             # Store result into cache if one is available.
             if self.use_cache and self.api.cache and self.method == 'GET' and result:
-                self.api.cache.store('%s?%s' % (url, urlencode(self.session.params)), result)
+                self.api.cache.store('%s?%s' % (
+                    url, urlencode(self.session.params)), result)
 
             return result
 
